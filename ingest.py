@@ -15,7 +15,7 @@ import os
 graph = Neo4jGraph()
 
 # Load Wikipedia Data
-all_data = WikipediaLoader(query="Removal_of_Sam_Altman_from_OpenAI").load()
+all_data = WikipediaLoader(query="what is the next best MSR Research project for microsoft continue to invest with similar return as openai").load()
 
 # Embeddings & LLM models
 embeddings = OpenAIEmbeddings()
