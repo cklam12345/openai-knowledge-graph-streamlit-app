@@ -15,7 +15,9 @@ import os
 graph = Neo4jGraph()
 
 # Load Wikipedia Data
-all_data = WikipediaLoader(query="what is the next best MSR Research project for microsoft continue to invest with similar return as openai").load()
+#all_data = WikipediaLoader(query="what is the next best MSR Research project for microsoft continue to invest with similar return as openai").load()
+loader = DirectoryLoader('./data/', glob='*.pdf', loader_cls=PyPDFLoader)
+all_data = loader.load()
 
 # Embeddings & LLM models
 embeddings = OpenAIEmbeddings()
