@@ -35,9 +35,9 @@ all_data = loader.load()
 ##embeddings = OpenAIEmbeddings()
 ##embedding_dimension = 1536
 #with azure ai access setup
-embeddings = OpenAIEmbeddings(document_model_name="text-embedding-ada-001", openai=client)
+embeddings = OpenAIEmbeddings(document_model_name="text-embedding-large", openai=client)
 embedding_dimension = 1536
-llm = ChatOpenAI(temperature=0)
+llm = ChatOpenAI(temperature=0, openai=client)
 
 # Process All Data
 parent_splitter = TokenTextSplitter(chunk_size=512, chunk_overlap=24)
