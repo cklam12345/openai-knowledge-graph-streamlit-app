@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import List
 from langchain.chains.openai_functions import create_structured_output_chain
 from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import WikipediaLoader, PyPDFLoader, TextLoader
+from langchain.document_loaders import WikipediaLoader, PyPDFLoader, TextLoader, DirectoryLoader
 from langchain.docstore.document import Document
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.graphs import Neo4jGraph
@@ -12,6 +12,17 @@ from langchain.text_splitter import TokenTextSplitter, CharacterTextSplitter
 from neo4j.exceptions import ClientError
 import os
 
+#for azure ai setup
+from openai import AzureOpenAI
+api_key = os.getenv("AZURE_OPENAI_API_KEY")  # Retrieve from environment variable
+azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+api_version = "2023-12-01-preview"  # Example, adjust as needed
+client = AzureOpenAI(api_key=api_key, api_version=api_version, azure_endpoint=azure_endpoint)
+
+
+
+
+#for executing graph db known as neo4j, the one ! from matrix
 graph = Neo4jGraph()
 
 # Load Wikipedia Data
@@ -20,7 +31,11 @@ loader = DirectoryLoader('./data/', glob='*.pdf', loader_cls=PyPDFLoader)
 all_data = loader.load()
 
 # Embeddings & LLM models
-embeddings = OpenAIEmbeddings()
+#with open ai public access setup
+##embeddings = OpenAIEmbeddings()
+##embedding_dimension = 1536
+#with azure ai access setup
+embeddings = OpenAIEmbeddings(document_model_name="text-embedding-ada-001", openai=client)
 embedding_dimension = 1536
 llm = ChatOpenAI(temperature=0)
 
